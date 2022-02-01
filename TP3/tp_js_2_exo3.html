@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>TP3 Exo3</title>
+</head>
+<body>
+	<fieldset>
+		<canvas id="arena" width=600 height=600 style="border: 1px solid #000000"></canvas>
+	</fieldset>
+</body>
+<script>
+	let intervalId; 	
+
+	let canvas;
+	let context;
+
+	const fps = 10; // frame per seconds
+	const speedInPxPs = 100; // in px  per deci seconds
+	
+	const squareWidth = 50;
+	let squareX = 0;
+	let squareY = 10; 
+	let speedX = 0; 
+
+	window.setTimeout(startGame,2000);
+
+	function startGame(){
+		canvas = document.getElementById("arena");
+		context = canvas.getContext("2d");
+		speedX = speedInPxPs / fps; //100px per seconds and 10fps => 1px per frame (approx)
+		intervalId = window.setInterval(gameLoop,1000/fps); // 10fps
+	}
+
+	function endGame(){
+		window.clearInterval(intervalId);	
+	}
+
+	function gameLoop(){
+		clearSquare();
+		updateSquare();
+		drawSquare();
+	}
+
+	function clearSquare(){
+		context.clearRect(squareX-1, squareY-1, squareWidth+2, squareWidth+2);
+	}
+
+	function updateSquare(){
+		if(squareX + squareWidth >= arena.width){
+			endGame();
+		} else {
+			squareX = squareX + speedX;
+		}
+	}
+
+	function drawSquare(){
+		context.fillStyle="red";
+		context.fillRect(squareX, squareY, squareWidth, squareWidth);
+	}
+
+</script>
+</html>

@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+<head>
+<title>classical game loop</title>
+</style>
+</head>
+<body>
+<canvas id="gameField" width=600 height=600 style="border: 1px solid #000000"></canvas>
+</body>
+<script>
+	document.addEventListener("DOMContentLoaded",init);
+
+	const canvas = document.getElementById("gameField");
+	const context = canvas.getContext("2d");
+
+	let wallClock = 0;
+
+	const carreWidth= 50;
+	const fps = 10; // frame per seconds
+	const speedInPxPs = 100; // in px  per deci seconds
+	let intervalId;
+	let speedX=0;
+	const squareWidth = 50;
+
+	class Carre {
+		constructor(context,width, height,x,y,speed, delay){
+			this.context=context;
+			this.width=width;
+			this.height=height;
+			this.x=x;
+			this.y=y;
+			this.speed=speed;
+			this.frameIndex=0;
+			this.delay=delay;
+			this.hasStarted=false;
+		}
+
+		clear(){
+			this.context.clearRect(this.x, this.y, this.width, this.height);
+		}
+
+		update(){
+			if((this.hasStarted == false) && (this.delay<wallClock)){
+				console.log("starting");
+				this.hasStarted=true;
+			}
+
+
+			if( (this.hasStarted == true) && (wallClock%this.speed == 0)){
+				if(this.x + this.width >= canvas.width){
+					endGame();
+				} else {
+					this.x = this.x + this.speed;
+				}
+        		}
+		}
+
+		draw(){
+			this.context.fillStyle="red";
+			this.context.fillRect(this.x, this.y, this.width, this.width);
+		}
+
+
+	}
+
+	const objectsInGame = new Array();
+
+    	const carre1 = new Carre(context, carreWidth, carreWidth,0,100,speedX, 0);
+   	const carre2 = new Carre(context, carreWidth, carreWidth,0,200,speedX, 1000);
+   	const carre3 = new Carre(context, carreWidth, carreWidth,0,300,speedX, 4000);
+
+   	objectsInGame.push(carre1);
+   	objectsInGame.push(carre2);
+   	objectsInGame.push(carre3);
+
+	function clearGame(){
+		objectsInGame.forEach(element => element.clear());
+	}
+
+
+	function updateGame(){
+		wallClock += 1;
+		objectsInGame.forEach(element => element.update());
+	}
+	
+
+	function drawGame(){
+		objectsInGame.forEach(element => element.draw());
+	}
+	
+	function init(){
+		speedX = speedInPxPs / fps; //100px per seconds and 10fps => 1px per frame (approx)
+		intervalId = window.setInterval(mainloop,1000/fps); // 10fps
+	}
+
+	function endGame(){
+		window.clearInterval(intervalId);	
+	}
+	
+	function mainloop(){
+	 	clearGame();
+        	updateGame();
+        	drawGame();
+    	};
+
+</script>
+</html>

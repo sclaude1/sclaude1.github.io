@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <body>
+	<fieldset>
+		<canvas id="carre" width=600 height=600 style="border: 1px solid #000000"></canvas>
+	</fieldset>
+  </body>
+  <script>
+	document.addEventListener("DOMContentLoaded",init);
+
+	let a;
+	let canvas;
+	let context;
+function init(){
+	canvas = document.getElementById("arena");
+	context = canvas.getContext("2d");
+	const xhr = new XMLHttpRequest()
+	xhr.onreadystatechange = () => {
+  		if (xhr.readyState === 4 && xhr.status === 200) {
+			a=JSON.parse(xhr.responseText);
+			console.log(a);
+			context.fillRect(a.x,a.y,10,10);
+  		}
+	}
+	xhr.open('GET', 'https://stwom.herokuapp.com/3');
+	xhr.send();
+}
+  </script>
+</html>

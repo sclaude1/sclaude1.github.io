@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Compteur exo1 TP3</title>
+</head>
+<body>
+	<fieldset>
+		<legend id="gameLegend">Temps : 10 s</legend>
+	</fieldset>
+</body>
+<script>
+	document.addEventListener("DOMContentLoaded",startCompteur);
+	
+	const event= new Event('over');
+	let legend;
+	let intervalId;
+	let sec = 10;
+
+	function startCompteur(){
+
+		legend = document.getElementById("gameLegend");
+		intervalId = window.setInterval(compteur, 1000);
+
+	}
+
+	function compteur(){
+    		sec--;
+		legend.textContent = "Temps restant :"+sec+"s.";
+     
+    		if(sec <= 0)
+    		{
+			
+        		legend.textContent = "Terminé !";
+			finCompteur();
+    		}
+	}
+
+	function finCompteur(){
+		window.clearInterval(intervalId);
+	}
+
+</script>
+</html>

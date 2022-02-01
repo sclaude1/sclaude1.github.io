@@ -1,16 +1,17 @@
-var Point = function(x,y,canvas)
-{
-	this.canvas=canvas;
-	this.canvas2dContext=this.canvas.getContext("2d");
-	this.x=x;
-	this.y=y;
+window.addEventListener("DOMContentLoaded",init);
 
-	this.ache = function()
-	{
+let hCanvas;
+let ctx;
 
-		this.canvas2dContext.beginPath();
-		this.canvas2dContext.arc(this.x,this.y,5,0,2*Math.PI,false);
-		this.canvas2dContext.fillStyle = "black";
-		this.canvas2dContext.stroke();
-	}
+function init(){
+  hCanvas=document.getElementById("mycanvas");
+  ctx=hCanvas.getContext("2d");
+  trace(0.8);
+}
+
+function trace(angle){
+  ctx.beginPath();
+  ctx.arc(50,50,20,0,angle*Math.PI,false);
+  ctx.fillStyle="black";
+  ctx.stroke();
 }

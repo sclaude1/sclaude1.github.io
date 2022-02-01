@@ -1,39 +1,26 @@
 <html>
-	<head>
-		<style type="text/css">
-			#navlist{position:relative;}
-			#navlist li{margin:0;padding:0;list-style:none;position:absolute;top:0;}
-			#navlist li,#navlist a{height:60px;display:block;}
-			#play{left:0px;width:47px;}
-			#play{background-image:url("image.jpg"); border:black; border-width: 1px; width:300px; height:300px!important; background-repeat:no-repeat; background-size:300px 300px}
-		</style>
-		<SCRIPT LANGUAGE="Javascript" SRC="point.js"></SCRIPT>
 		<script> 
-			var i=1; 
-			var j=1; 
-			var aCanvas;
-			function init()
-			{
-				aCanvas=document.getElementById('myCanvas');
-			}
+window.addEventListener("DOMContentLoaded",init);
 
-			function updateCanvas()
-			{
-				if(j<10)
-				{
-					if(i>9){
-						i=1;
-						j++;
-					}
-					point1=new Point(20*i,20*j,aCanvas);
-					point1.ache();
-					i++;
-				}
-			}
+let hCanvas;
+let ctx;
+
+function init(){
+  hCanvas=document.getElementById("mycanvas");
+  ctx=hCanvas.getContext("2d");
+  trace(0.8);
+}
+
+function trace(angle){
+  ctx.beginPath();
+  ctx.arc(50,50,20,0,angle*Math.PI,false);
+  ctx.fillStyle="black";
+  ctx.stroke();
+}
 		</script>
 	</head>
 	<body onload='init()'>
-		<canvas id="myCanvas" width="200" height="200"></canvas>
+		<canvas id="myCanvas" width="100" height="100"></canvas>
 		<ul id="navlist">
 			<li id="play" onclick="updateCanvas()"/>
 		</ul>
